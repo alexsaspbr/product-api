@@ -1,0 +1,1 @@
+INSERT INTO tutorials_tbl (ID, TITLE, AUTHOR) VALUES (1, 'Java como Programar', 'Deitel');
