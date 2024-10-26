@@ -6,11 +6,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ada.products_api.dto.ProductDTO;
+import tech.ada.products_api.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,9 @@ import java.util.List;
 @RequestMapping("/product")
 @Tag(name = "Product")
 public class ProductController {
+
+    @Autowired
+    private ProductService productService;
 
     static List<ProductDTO> products = new ArrayList<>();
 
@@ -38,8 +43,7 @@ public class ProductController {
     public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO productDTO) {
         //validar produto
         //gravar na db
-        products.add(productDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.criar(productDTO));
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
