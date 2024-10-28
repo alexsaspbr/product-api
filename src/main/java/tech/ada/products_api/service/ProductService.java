@@ -6,6 +6,10 @@ import tech.ada.products_api.dto.ProductDTO;
 import tech.ada.products_api.model.Product;
 import tech.ada.products_api.repository.ProductRepository;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class ProductService {
 
@@ -27,4 +31,29 @@ public class ProductService {
 
     }
 
+    public List<ProductDTO> listAll() {
+        return this.productRepository.findAll().stream()
+                .map(ProductService::convert).collect(Collectors.toList());
+    }
+
+    private static ProductDTO convert (Product product) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setSku(product.getSku());
+        productDTO.setName(product.getName());
+        productDTO.setDescription(product.getDescription());
+        productDTO.setPrice(product.getPrice());
+        productDTO.setWeight(product.getWeight());
+        return productDTO;
+    }
+
+    public ProductDTO buscarPorSku(String sku) {
+        Optional<Product> optionalProduct = this.productRepository.findBySku(sku);
+        if(optionalProduct.isPresent())
+            return convert(optionalProduct.get());
+        return null;
+    }
+
+    public List<ProductDTO> listAllNameEqualTo(String name) {
+        return null;
+    }
 }

@@ -48,7 +48,17 @@ public class ProductController {
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDTO> listAll() {
-        return products;
+        return this.productService.listAll();
+    }
+
+    @GetMapping(value = "/all-with-name-equalTo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ProductDTO> listAllWithNameEqualTo(@RequestParam("name") String name) {
+        return this.productService.listAllNameEqualTo(name);
+    }
+
+    @GetMapping(value = "/by/{sku}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductDTO> bySKU(@PathVariable("sku") String sku) {
+        return ResponseEntity.ok(this.productService.buscarPorSku(sku));
     }
 
     @PutMapping
