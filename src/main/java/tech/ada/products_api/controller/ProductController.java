@@ -25,8 +25,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    static List<ProductDTO> products = new ArrayList<>();
-
     @Operation(summary = "Create products")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created"),
@@ -63,23 +61,12 @@ public class ProductController {
 
     @PutMapping
     public ResponseEntity<ProductDTO> update(@RequestBody ProductDTO productDTO) {
-        ProductDTO produtoDB = products.stream()
-                .filter(p -> productDTO.getSku().equalsIgnoreCase(p.getSku())).findFirst()
-                .orElseThrow();
-        int index = products.indexOf(produtoDB);
-        produtoDB.setPrice(productDTO.getPrice());
-
-        products.set(index, produtoDB);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(produtoDB);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.productService.update(productDTO));
     }
 
     @DeleteMapping("/{sku}")
     public ResponseEntity<Void> delete(@PathVariable("sku") String sku) {
-        ProductDTO produtoDB = products.stream()
-                .filter(p -> sku.equalsIgnoreCase(p.getSku())).findFirst()
-                .orElseThrow();
-
-        products.remove(produtoDB);
+        this.productService.delete(sku);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
