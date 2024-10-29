@@ -3,9 +3,11 @@ package tech.ada.products_api.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.ada.products_api.dto.ProductDTO;
+import tech.ada.products_api.dto.ResponseDTO;
 import tech.ada.products_api.model.Product;
 import tech.ada.products_api.repository.ProductRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,11 +48,15 @@ public class ProductService {
         return productDTO;
     }
 
-    public ProductDTO buscarPorSku(String sku) {
+    public ResponseDTO<?> buscarPorSku(String sku) {
         Optional<Product> optionalProduct = getBySku(sku);
         if(optionalProduct.isPresent())
-            return convert(optionalProduct.get());
-        return null;
+            return ResponseDTO.builder().message("Produto encontrado")
+                                            .timestamp(LocalDateTime.now())
+                    .data(convert(optionalProduct.get())).build();
+        return ResponseDTO.builder().message("Nenhum produto encontrado")
+                .timestamp(LocalDateTime.now())
+                .build();
     }
 
     private Optional<Product> getBySku(String sku) {
@@ -81,7 +87,10 @@ public class ProductService {
     }
 
     public void delete(String sku) {
-
+        Optional<Product> optionalProduct = getBySku(sku);
+        if(optionalProduct.isPresent()) {
+            this.productRepository.delete(optionalProduct.get());
+        }
     }
 
 }

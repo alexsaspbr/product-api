@@ -6,12 +6,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ada.products_api.dto.ProductDTO;
+import tech.ada.products_api.dto.ResponseDTO;
 import tech.ada.products_api.service.ProductService;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/by/{sku}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductDTO> bySKU(@PathVariable("sku") String sku) {
+    public ResponseEntity<ResponseDTO<?>> bySKU(@PathVariable("sku") String sku) {
         return ResponseEntity.ok(this.productService.buscarPorSku(sku));
     }
 
