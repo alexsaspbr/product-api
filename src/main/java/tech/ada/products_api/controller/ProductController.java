@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import tech.ada.products_api.dto.ProductDTO;
 import tech.ada.products_api.dto.ResponseDTO;
 import tech.ada.products_api.service.ProductService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,11 @@ public class ProductController {
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDTO> listAll() {
         return this.productService.listAll();
+    }
+
+    @GetMapping(value = "/all-from/{from}/to/{to}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ProductDTO> listAll(LocalDateTime from, LocalDateTime to) {
+        return this.productService.listAll(from, to);
     }
 
     @GetMapping(value = "/all-with-name-equalTo", produces = MediaType.APPLICATION_JSON_VALUE)

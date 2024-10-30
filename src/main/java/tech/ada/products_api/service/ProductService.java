@@ -24,6 +24,7 @@ public class ProductService {
         product.setSku(productDTO.getSku());
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
+        product.setRegisterDate(productDTO.getRegisterDate());
         product.setPrice(productDTO.getPrice());
         product.setWeight(productDTO.getWeight());
 
@@ -38,11 +39,17 @@ public class ProductService {
                 .map(this::convert).collect(Collectors.toList());
     }
 
+    public List<ProductDTO> listAll(LocalDateTime from, LocalDateTime to) {
+        return this.productRepository.findByRegisterDate(from, to)
+                .stream().map(this::convert).collect(Collectors.toList());
+    }
+
     private ProductDTO convert (Product product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setSku(product.getSku());
         productDTO.setName(product.getName());
         productDTO.setDescription(product.getDescription());
+        productDTO.setRegisterDate(product.getRegisterDate());
         productDTO.setPrice(product.getPrice());
         productDTO.setWeight(product.getWeight());
         return productDTO;
