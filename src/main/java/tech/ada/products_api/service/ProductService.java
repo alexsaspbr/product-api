@@ -1,5 +1,6 @@
 package tech.ada.products_api.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.ada.products_api.dto.ProductDTO;
@@ -99,11 +100,9 @@ public class ProductService {
         return null;
     }
 
+    @Transactional
     public void delete(String sku) {
-        Optional<Product> optionalProduct = getBySku(sku);
-        if(optionalProduct.isPresent()) {
-            this.productRepository.delete(optionalProduct.get());
-        }
+        this.productRepository.deleteBySku(sku);
     }
 
 }
