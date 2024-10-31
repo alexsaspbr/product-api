@@ -58,6 +58,13 @@ public class ProductController {
         return this.productService.listAll(from, to);
     }
 
+    @GetMapping(value = "/by-name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ProductDTO> listAll(@PathVariable("name") String name,
+                                    @RequestHeader("from") LocalDateTime from,
+                                    @RequestHeader("to")LocalDateTime to) {
+        return this.productService.listAll(name, from, to);
+    }
+
     @GetMapping(value = "/all-with-name-equalTo", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDTO> listAllWithNameEqualTo(@RequestParam("name") String name) {
         return this.productService.listAllNameEqualTo(name);

@@ -39,9 +39,15 @@ public class ProductService {
                 .map(this::convert).collect(Collectors.toList());
     }
 
+
     public List<ProductDTO> listAll(LocalDateTime from, LocalDateTime to) {
         return this.productRepository.findByRegisterDate(from, to)
                 .stream().map(this::convert).collect(Collectors.toList());
+    }
+
+    public List<ProductDTO> listAll(String name, LocalDateTime from, LocalDateTime to) {
+        //TODO - implementar com @Query
+        return null;
     }
 
     private ProductDTO convert (Product product) {
