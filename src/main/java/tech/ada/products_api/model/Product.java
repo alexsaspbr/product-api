@@ -17,7 +17,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 10)
     private String sku;
     @Column(nullable = false)
     private String name;
@@ -26,6 +26,8 @@ public class Product {
     private LocalDateTime registerDate;
     @Column(precision = 16, scale = 2, nullable = false)
     private BigDecimal price;
+    @Column(precision = 16, scale = 2, nullable = false)
+    private BigDecimal exchange;
     private Double weight;
 
 }

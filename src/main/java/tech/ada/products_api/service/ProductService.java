@@ -19,6 +19,9 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ExchangeService exchangeService;
+
     public ProductDTO criar(ProductDTO productDTO) {
 
         Product product = new Product();
@@ -28,6 +31,7 @@ public class ProductService {
         product.setRegisterDate(productDTO.getRegisterDate());
         product.setPrice(productDTO.getPrice());
         product.setWeight(productDTO.getWeight());
+        product.setExchange(exchangeService.getConvertedPrice(productDTO.getPrice()));
 
         productRepository.save(product);
 
