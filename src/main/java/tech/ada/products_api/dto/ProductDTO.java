@@ -22,7 +22,10 @@ public class ProductDTO {
     @Parameter(required = true)
     private String description;
     private BigDecimal price;
+    private BigDecimal priceConverted;
+    private BigDecimal exchange;
     private LocalDateTime registerDate;
     private Double weight;
+
 
 }

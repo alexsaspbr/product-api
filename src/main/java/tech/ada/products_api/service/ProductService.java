@@ -3,11 +3,13 @@ package tech.ada.products_api.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tech.ada.products_api.client.api.ExchangeClient;
 import tech.ada.products_api.dto.ProductDTO;
 import tech.ada.products_api.dto.ResponseDTO;
 import tech.ada.products_api.model.Product;
 import tech.ada.products_api.repository.ProductRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +22,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    private ExchangeService exchangeService;
+    private ExchangeClient exchangeClient;
 
     public ProductDTO criar(ProductDTO productDTO) {
 
@@ -31,7 +33,10 @@ public class ProductService {
         product.setRegisterDate(productDTO.getRegisterDate());
         product.setPrice(productDTO.getPrice());
         product.setWeight(productDTO.getWeight());
-        product.setExchange(exchangeService.getConvertedPrice(productDTO.getPrice()));
+
+        BigDecimal exchange = exchangeClient.getExchange();
+        product.setExchange(exchange);
+        product.setPriceConverted(productDTO.getPrice().multiply(exchange));
 
         productRepository.save(product);
 
@@ -62,6 +67,8 @@ public class ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setRegisterDate(product.getRegisterDate());
         productDTO.setPrice(product.getPrice());
+        productDTO.setPriceConverted(product.getPriceConverted());
+        productDTO.setExchange(product.getExchange());
         productDTO.setWeight(product.getWeight());
         return productDTO;
     }

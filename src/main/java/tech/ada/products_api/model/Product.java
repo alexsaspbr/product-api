@@ -27,6 +27,8 @@ public class Product {
     @Column(precision = 16, scale = 2, nullable = false)
     private BigDecimal price;
     @Column(precision = 16, scale = 2, nullable = false)
+    private BigDecimal priceConverted;
+    @Column(precision = 16, scale = 2, nullable = false)
     private BigDecimal exchange;
     private Double weight;
 
