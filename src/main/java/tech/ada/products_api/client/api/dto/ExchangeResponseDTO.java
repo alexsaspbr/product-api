@@ -1,4 +1,4 @@
-package tech.ada.products_api.client.api;
+package tech.ada.products_api.client.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

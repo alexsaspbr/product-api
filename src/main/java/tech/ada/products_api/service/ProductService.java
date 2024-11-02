@@ -2,14 +2,18 @@ package tech.ada.products_api.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tech.ada.products_api.client.api.ExchangeClient;
+import tech.ada.products_api.client.api.ExchangeClientFeign;
+import tech.ada.products_api.client.api.dto.ExchangeResponseDTO;
 import tech.ada.products_api.dto.ProductDTO;
 import tech.ada.products_api.dto.ResponseDTO;
 import tech.ada.products_api.model.Product;
 import tech.ada.products_api.repository.ProductRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +26,7 @@ public class ProductService {
     private ProductRepository productRepository;
 
     @Autowired
-    private ExchangeClient exchangeClient;
+    private ExchangeClientFeign exchangeClientFeign;
 
     public ProductDTO criar(ProductDTO productDTO) {
 
@@ -35,9 +39,15 @@ public class ProductService {
         product.setWeight(productDTO.getWeight());
 
         //BigDecimal exchange = exchangeClient.getExchange();
-        BigDecimal exchange = exchangeClient.getExchangeForPeriod();
-        product.setExchange(exchange);
-        product.setPriceConverted(productDTO.getPrice().multiply(exchange));
+
+        //BigDecimal exchange = exchangeClient.getExchangeAvgForPeriod(LocalDate.now(), LocalDate.now());
+
+        ResponseEntity<ExchangeResponseDTO> response = exchangeClientFeign.getExchange();
+        if(response.getStatusCode().value() == 200) {
+            BigDecimal exchange = response.getBody().getExchange().getBid();
+            product.setExchange(exchange);
+            product.setPriceConverted(productDTO.getPrice().multiply(exchange));
+        }
 
         productRepository.save(product);
 
