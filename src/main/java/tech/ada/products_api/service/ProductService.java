@@ -34,7 +34,8 @@ public class ProductService {
         product.setPrice(productDTO.getPrice());
         product.setWeight(productDTO.getWeight());
 
-        BigDecimal exchange = exchangeClient.getExchange();
+        //BigDecimal exchange = exchangeClient.getExchange();
+        BigDecimal exchange = exchangeClient.getExchangeForPeriod();
         product.setExchange(exchange);
         product.setPriceConverted(productDTO.getPrice().multiply(exchange));
 
