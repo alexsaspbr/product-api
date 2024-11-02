@@ -14,8 +14,9 @@ import java.time.LocalDateTime;
 @Schema
 public class ProductDTO {
 
+    @Size(max = 10, message = "Tamanho maximo de 10 caracteres")
     @NotBlank(message = "O sku é obrigatório")
-    @Pattern(regexp = "[a-zA-Z]+", message = "Somente letras")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "Somente letras")
     private String sku;
     @NotBlank(message = "O nome é obrigatório")
     private String name;
