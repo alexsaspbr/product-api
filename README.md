@@ -43,3 +43,13 @@ public class Reservation {
 }
 
 ```
+
+# Exercício 3: Sistema de Reservas de Restaurantes
+
+
+## Objetivo: Aplicar validacao com o Spring Validation e também consumir uma API Externa
+
+**Tarefas:**
+
+1. Aplicar validacoes com Spring Validation no modelo Reservation com os atributos: id, customerName, date, time, e tableNumber.
+2. Criar um client com OpenFeign para consumir uma API Externa de sua escolha.
