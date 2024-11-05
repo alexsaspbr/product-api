@@ -1,4 +1,4 @@
 package tech.ada.products_api.exception;
 
-public class TokenInvalidException {
+public class TokenInvalidException extends Exception {
 }

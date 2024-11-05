@@ -1,4 +1,4 @@
 package tech.ada.products_api.dto;
 
-public record LoginResponseDTO() {
+public record LoginResponseDTO(String token) {
 }
