@@ -26,9 +26,9 @@ public class Product {
     private LocalDateTime registerDate;
     @Column(precision = 16, scale = 2, nullable = false)
     private BigDecimal price;
-    @Column(precision = 16, scale = 2, nullable = false)
+    @Column(precision = 16, scale = 2)
     private BigDecimal priceConverted;
-    @Column(precision = 16, scale = 2, nullable = false)
+    @Column(precision = 16, scale = 2)
     private BigDecimal exchange;
     private Double weight;
 

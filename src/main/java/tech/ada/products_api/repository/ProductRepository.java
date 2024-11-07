@@ -1,5 +1,7 @@
 package tech.ada.products_api.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +20,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findBySku(String sku);
 
     List<Product> findByNameContainingIgnoreCase(String name);
+
+    //Page<Product> findAllByNameContainingIgnoreCase(String name);
 
     //JPQL
     //@Query("select p from Product p where p.registerDate between :from and :to")

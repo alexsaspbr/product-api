@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ada.products_api.dto.ProductDTO;
 import tech.ada.products_api.dto.ResponseDTO;
+import tech.ada.products_api.dto.ResponsePagingDTO;
 import tech.ada.products_api.service.ProductService;
 
 import java.time.LocalDateTime;
@@ -52,6 +53,12 @@ public class ProductController {
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDTO> listAll() {
         return this.productService.listAll();
+    }
+
+    @GetMapping(value = "/all-paging", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponsePagingDTO<?> listAllPaging(@RequestParam("pageNumber") int pageNumber,
+                                              @RequestParam("pageSize") int pageSize) {
+        return this.productService.listAllPaging(pageNumber, pageSize);
     }
 
     @GetMapping(value = "/all-from/{from}/to/{to}", produces = MediaType.APPLICATION_JSON_VALUE)
