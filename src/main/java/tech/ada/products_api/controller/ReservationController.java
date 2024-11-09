@@ -1,5 +1,6 @@
 package tech.ada.products_api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/reservations")
 @Tag(name = "Reservations")
+@SecurityRequirement(name = "Bearer Authentication")
 public class ReservationController {
 
     @DeleteMapping("/{table-number}")
