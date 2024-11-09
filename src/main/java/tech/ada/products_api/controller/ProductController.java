@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
@@ -26,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 @Tag(name = "Product")
+@SecurityRequirement(name="basic-auth")
 public class ProductController {
 
     @Autowired
